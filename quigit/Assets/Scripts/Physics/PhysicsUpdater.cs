@@ -10,20 +10,22 @@ public class PhysicsUpdater : MonoBehaviour
 
     [Header("Physics settings")]
     public float gravityStrength = 10;
-    public int maxBounces = 3;
+    public int maxBounces = 2;
     public float skinWidth = 0.01f;
 
     private void Update()
     {
         globalVelocity.y -= gravityStrength * Time.deltaTime;
         Vector3 finalVel = globalVelocity * Time.deltaTime;
-        finalVel = CollideAndSlide(finalVel, transform.position, 0, false, finalVel);
+        finalVel = CollideAndSlide(finalVel, transform.position, 0, false);
         globalVelocity = finalVel / Time.deltaTime;
-        //globalVelocity = manageGravity(globalVelocity);
-        transform.position += finalVel;
+        Vector3 localVelocity = transform.InverseTransformDirection(globalVelocity);
+        localVelocity.x = 0;
+        globalVelocity = transform.TransformDirection(localVelocity);
+        transform.position += globalVelocity * Time.deltaTime;
     }
 
-    private Vector3 CollideAndSlide(Vector3 vel, Vector3 pos, int depth, bool gravityPass, Vector3 velInit) //stole this from https://www.youtube.com/watch?v=YR6Q7dUz2uk
+    private Vector3 CollideAndSlide(Vector3 vel, Vector3 pos, int depth, bool wackyMode) //stole this from https://www.youtube.com/watch?v=YR6Q7dUz2uk
     {                                                                                                            // highly recomend watching it
         if (depth >= maxBounces)
         { 
@@ -40,10 +42,14 @@ public class PhysicsUpdater : MonoBehaviour
             Vector3 leftover = vel - snapToSurface;
 
             float mag = leftover.magnitude;
-            leftover = Vector3.ProjectOnPlane(leftover, hit.normal).normalized;
-            leftover *= mag; 
+            leftover = Vector3.ProjectOnPlane(leftover, hit.normal);
+            if (wackyMode)
+            {
+                leftover = leftover.normalized;
+                leftover *= mag;
+            }
 
-            return snapToSurface + CollideAndSlide(leftover, pos + snapToSurface, depth + 1, gravityPass, velInit);
+            return snapToSurface + CollideAndSlide(leftover, pos + snapToSurface, depth + 1, wackyMode);
         }
 
         return vel;
