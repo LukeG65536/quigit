@@ -10,22 +10,32 @@ public class PhysicsUpdater : MonoBehaviour
 
     [Header("Physics settings")]
     public float gravityStrength = 10;
-    public int maxBounces = 2;
+    public int maxBounces = 4;
     public float skinWidth = 0.01f;
 
     private void Update()
     {
         globalVelocity.y -= gravityStrength * Time.deltaTime;
-        Vector3 finalVel = globalVelocity * Time.deltaTime;
-        finalVel = CollideAndSlide(finalVel, transform.position, 0, false);
-        globalVelocity = finalVel / Time.deltaTime;
-        Vector3 localVelocity = transform.InverseTransformDirection(globalVelocity);
-        localVelocity.x = 0;
-        globalVelocity = transform.TransformDirection(localVelocity);
-        transform.position += globalVelocity * Time.deltaTime;
+        applyPhysics();
+
+        //Vector3 localVelocity = transform.InverseTransformDirection(globalVelocity);
+        //localVelocity.x = 0;
+        //globalVelocity = transform.TransformDirection(localVelocity);
+        //applyPhysics(false);
+
+        //transform.position += globalVelocity * Time.deltaTime;
     }
 
-    private Vector3 CollideAndSlide(Vector3 vel, Vector3 pos, int depth, bool wackyMode) //stole this from https://www.youtube.com/watch?v=YR6Q7dUz2uk
+    public void applyPhysics()
+    {
+        //globalVelocity.y -= gravityStrength * Time.deltaTime;
+        Vector3 finalVel = globalVelocity * Time.deltaTime;
+        finalVel = CollideAndSlide(finalVel, transform.position, 0);
+        transform.position += finalVel;
+        globalVelocity = finalVel / Time.deltaTime;
+    }
+
+    private Vector3 CollideAndSlide(Vector3 vel, Vector3 pos, int depth) //stole this from https://www.youtube.com/watch?v=YR6Q7dUz2uk
     {                                                                                                            // highly recomend watching it
         if (depth >= maxBounces)
         { 
@@ -40,16 +50,14 @@ public class PhysicsUpdater : MonoBehaviour
         {
             Vector3 snapToSurface = vel.normalized * (hit.distance - skinWidth);
             Vector3 leftover = vel - snapToSurface;
-
-            float mag = leftover.magnitude;
             leftover = Vector3.ProjectOnPlane(leftover, hit.normal);
-            if (wackyMode)
-            {
-                leftover = leftover.normalized;
-                leftover *= mag;
-            }
 
-            return snapToSurface + CollideAndSlide(leftover, pos + snapToSurface, depth + 1, wackyMode);
+
+
+            //float mag = leftover.magnitude;
+            //leftover = Vector3.ProjectOnPlane(leftover, hit.normal);
+
+            return snapToSurface + CollideAndSlide(leftover, pos + snapToSurface, depth + 1);
         }
 
         return vel;
