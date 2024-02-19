@@ -1741,6 +1741,7 @@ GameObject:
   - component: {fileID: 1978497941}
   - component: {fileID: 1978497940}
   - component: {fileID: 1978497945}
+  - component: {fileID: 1978497946}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -1760,8 +1761,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e80a0c0caee8ec4fafaa4263ec7eac8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  frozen: 0
   globalVelocity: {x: 0, y: 0, z: 0}
-  xLock: 1
+  xLock: 0
   gravityStrength: 10
   maxBounces: 4
   skinWidth: 0.01
@@ -1871,6 +1873,30 @@ MonoBehaviour:
   physics: {fileID: 1978497940}
   blastRadius: 10
   strength: 0.2
+--- !u!114 &1978497946
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1978497939}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d00a008ff6341946a62cd53c00e7af7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pm: {fileID: 1978497940}
+  cam: {fileID: 1823688467}
+  gunTip: {fileID: 1978497944}
+  whatIsGrappleable:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  lr: {fileID: 0}
+  maxGrappleDistance: 20009
+  grappleDelayTime: 0.1
+  overshootYAxis: 3
+  grapplingCd: 2
+  grappleKey: 324
 --- !u!1 &2013410473
 GameObject:
   m_ObjectHideFlags: 1

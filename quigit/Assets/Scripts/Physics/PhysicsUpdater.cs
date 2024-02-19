@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class PhysicsUpdater : MonoBehaviour
 {
+    public bool frozen = false;
+
     // Start is called before the first frame update
     [Header("Velocity")]
     public Vector3 globalVelocity;
@@ -19,19 +21,22 @@ public class PhysicsUpdater : MonoBehaviour
 
     [Header("refs")]
     public TextMeshProUGUI fpsText;
+    private bool activeGrapple;
 
     private void Update()
     {
-        managePhysics();
+        managePhysics(frozen);
 
         fpsApprox = 1 / Time.smoothDeltaTime;
 
         fpsText.text = fpsApprox.ToString();
     }
 
-    private void managePhysics()
+    private void managePhysics(bool freeze)
     {
-        globalVelocity.y -= gravityStrength * Time.deltaTime;
+
+        if(!freeze) globalVelocity.y -= gravityStrength * Time.deltaTime;
+
         applyPhysics(false);                                       //apply gravity and basic colisions
 
         if (!xLock) return;                                //if xLocked is false then were done here
@@ -78,5 +83,28 @@ public class PhysicsUpdater : MonoBehaviour
         }
 
         return vel;
+    }
+
+
+    public void JumpToPosition(Vector3 targetPosition, float trajectoryHeight)
+    {
+        activeGrapple = true;
+
+        Vector3 velocityToSet = CalculateJumpVelocity(transform.position, targetPosition, trajectoryHeight);
+
+        globalVelocity = velocityToSet;
+    }
+
+    public Vector3 CalculateJumpVelocity(Vector3 startPoint, Vector3 endPoint, float trajectoryHeight)
+    {
+        float gravity = gravityStrength;
+        float displacementY = endPoint.y - startPoint.y;
+        Vector3 displacementXZ = new Vector3(endPoint.x - startPoint.x, 0f, endPoint.z - startPoint.z);
+
+        Vector3 velocityY = Vector3.up * Mathf.Sqrt(-2 * gravity * trajectoryHeight);
+        Vector3 velocityXZ = displacementXZ / (Mathf.Sqrt(-2 * trajectoryHeight / gravity)
+            + Mathf.Sqrt(2 * (displacementY - trajectoryHeight) / gravity));
+
+        return velocityXZ + velocityY;
     }
 }
