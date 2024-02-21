@@ -7,6 +7,7 @@ public class GrappleHook : MonoBehaviour
 {
     [Header("refs")]
     public Transform camPos;
+    public PhysicsUpdater physics;
 
     [Header("settings")]
     public float strength = 1f;
@@ -23,12 +24,12 @@ public class GrappleHook : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(1))
+        if (Input.GetMouseButtonDown(2))
         {
             StartCoroutine(startGrapple());
         }
 
-        if (Input.GetMouseButtonUp(1))
+        if (Input.GetMouseButtonUp(2))
         {
             isInGrapple = false;
         }
@@ -45,7 +46,9 @@ public class GrappleHook : MonoBehaviour
         float dist = snapToHit.magnitude;
         float legthFromMaxCircle = grappleLength - dist;
         float forceStrengthUnfiltered = 1 / (legthFromMaxCircle+1);
-
+        float finalStrength = Mathf.Clamp(forceStrengthUnfiltered,0f,50f);
+        Vector3 force = snapToHit.normalized * finalStrength;
+        physics.globalVelocity += force * Time.deltaTime;
     }
 
     IEnumerator startGrapple()

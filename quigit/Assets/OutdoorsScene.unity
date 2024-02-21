@@ -1882,21 +1882,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 1978497939}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9d00a008ff6341946a62cd53c00e7af7, type: 3}
+  m_Script: {fileID: 11500000, guid: 643460cad44691b48a5c2444c14f3d47, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pm: {fileID: 1978497940}
-  cam: {fileID: 1823688467}
-  gunTip: {fileID: 1978497944}
-  whatIsGrappleable:
+  camPos: {fileID: 1823688467}
+  physics: {fileID: 1978497940}
+  strength: 10
+  grappleCooldown: 1
+  grappleDelay: 0.1
+  grappleAble:
     serializedVersion: 2
-    m_Bits: 4294967295
-  lr: {fileID: 0}
-  maxGrappleDistance: 20009
-  grappleDelayTime: 0.1
-  overshootYAxis: 3
-  grapplingCd: 2
-  grappleKey: 324
+    m_Bits: 0
+  canGrapple: 1
+  isInGrapple: 0
+  grapplePoint: {x: 0, y: 0, z: 0}
+  grappleLength: 0
 --- !u!1 &2013410473
 GameObject:
   m_ObjectHideFlags: 1
