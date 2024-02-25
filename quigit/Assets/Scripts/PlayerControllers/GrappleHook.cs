@@ -11,6 +11,7 @@ public class GrappleHook : MonoBehaviour
 
     [Header("settings")]
     public float strength = 1f;
+    public float maxStrength = 200f;
     public float grappleCooldown = 1f;
     public float grappleDelay = 0.1f;
     public LayerMask grappleAble;
@@ -27,6 +28,8 @@ public class GrappleHook : MonoBehaviour
         if (Input.GetMouseButtonDown(2))
         {
             StartCoroutine(startGrapple());
+
+            Debug.Log("Starting grapple");
         }
 
         if (Input.GetMouseButtonUp(2))
@@ -46,8 +49,10 @@ public class GrappleHook : MonoBehaviour
         float dist = snapToHit.magnitude;
         float legthFromMaxCircle = grappleLength - dist;
         float forceStrengthUnfiltered = 1 / (legthFromMaxCircle+1);
-        float finalStrength = Mathf.Clamp(forceStrengthUnfiltered,0f,50f);
+        float finalStrength = Mathf.Clamp(forceStrengthUnfiltered,0f,maxStrength);
+        if (finalStrength == 0) finalStrength = maxStrength; 
         Vector3 force = snapToHit.normalized * finalStrength;
+        Debug.Log(finalStrength);
         physics.globalVelocity += force * Time.deltaTime;
     }
 
@@ -61,6 +66,7 @@ public class GrappleHook : MonoBehaviour
 
             grapplePoint = hit.point;
             isInGrapple = true;
+            Debug.Log("grapple started");
             StartCoroutine(startCooldown());
         }
     }

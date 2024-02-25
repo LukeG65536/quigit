@@ -1888,11 +1888,12 @@ MonoBehaviour:
   camPos: {fileID: 1823688467}
   physics: {fileID: 1978497940}
   strength: 10
+  maxStrength: 200
   grappleCooldown: 1
   grappleDelay: 0.1
   grappleAble:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 4294967295
   canGrapple: 1
   isInGrapple: 0
   grapplePoint: {x: 0, y: 0, z: 0}
