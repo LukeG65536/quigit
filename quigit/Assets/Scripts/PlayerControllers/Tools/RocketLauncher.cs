@@ -26,6 +26,7 @@ public class RocketLauncher : MonoBehaviour
     {
         if (Physics.Raycast(cameraController.transform.position, cameraController.transform.forward, out RaycastHit hit, blastRadius))
         {
+            canShoot = false;
             float dist = hit.distance;
             Vector3 dir = (cameraController.transform.position - hit.point).normalized;
             float power = blastRadius - dist;
