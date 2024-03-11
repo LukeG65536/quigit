@@ -16,6 +16,7 @@ public class PhysicsUpdater : MonoBehaviour
     public float gravityStrength = 10;
     public int maxBounces = 4;
     public float skinWidth = 0.01f;
+    public LayerMask stuff;
 
     public float fpsApprox;
 
@@ -66,7 +67,7 @@ public class PhysicsUpdater : MonoBehaviour
 
         RaycastHit hit;
 
-        if (Physics.SphereCast(pos, 0.5f, vel, out hit, dist))     //sphere cast of sphere
+        if (Physics.SphereCast(pos, 0.5f, vel, out hit, dist, stuff))     //sphere cast of sphere
         {
             Vector3 snapToSurface = vel.normalized * (hit.distance - skinWidth);    // this is the velocity that will move you all the way up to the wall
             Vector3 leftover = vel - snapToSurface;                                      //whats leftover after the wall snap
