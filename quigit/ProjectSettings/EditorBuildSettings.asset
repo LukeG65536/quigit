@@ -8,4 +8,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scened/lvl0.unity
     guid: 8124e5870f4fd4c779e7a5f994e84ad1
+  - enabled: 1
+    path: Assets/Scened/Main Menue.unity
+    guid: 40e853c40c4e6f24e9399d12492ab06c
+  - enabled: 1
+    path: Assets/OutdoorsScene.unity
+    guid: 05fc49e152247474dbce52b33abe071a
   m_configObjects: {}
