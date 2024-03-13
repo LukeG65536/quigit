@@ -302,6 +302,8 @@ GameObject:
   - component: {fileID: 7621622365562910608}
   - component: {fileID: 6922885403306479000}
   - component: {fileID: 2765126689054107518}
+  - component: {fileID: 1000117269711370899}
+  - component: {fileID: 8486130798517762850}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -392,7 +394,7 @@ SphereCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
@@ -414,6 +416,9 @@ MonoBehaviour:
   gravityStrength: 10
   maxBounces: 4
   skinWidth: 0.01
+  stuff:
+    serializedVersion: 2
+    m_Bits: 111
   fpsApprox: 0
   fpsText: {fileID: 0}
 --- !u!114 &7621622365562910608
@@ -432,7 +437,7 @@ MonoBehaviour:
   cameraController: {fileID: 7374552125142767317}
   physics: {fileID: 287528579372552194}
   blastRadius: 10
-  strength: 0.2
+  strength: 1
 --- !u!114 &6922885403306479000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -447,10 +452,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   camPos: {fileID: 369612139725216197}
   physics: {fileID: 287528579372552194}
-  strength: 10
-  maxStrength: 500
-  grappleCooldown: 1
-  grappleDelay: 0.1
+  strength: 0.2
+  maxStrength: 100
+  grappleCooldown: 0.3
+  grappleDelay: 0.01
   grappleAble:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -471,6 +476,47 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentDim: 0
+--- !u!114 &1000117269711370899
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2534228546610536359}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 258bfad16276bec4bab69dc11b71a59e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentCP: {fileID: 0}
+  text: {fileID: 0}
+--- !u!54 &8486130798517762850
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2534228546610536359}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &2922248489475229822
 GameObject:
   m_ObjectHideFlags: 0
